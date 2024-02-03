@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formateador de Texto</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            width: 60px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #textoFormateado {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Formateador de Texto</h1>
+
+    <label for="textoOriginal">Ingrese el texto:</label>
+    <textarea id="textoOriginal" rows="10" cols="50"></textarea>
+
+    <label for="palabrasPorLinea">Palabras por línea:</label>
+    <input type="number" id="palabrasPorLinea" value="2">
+
+    <button onclick="formatearYCopiar()">Formatear y Copiar</button>
+
+    <h2>Texto Formateado:</h2>
+    <textarea id="textoFormateado" rows="10" cols="50" readonly></textarea>
+
+    <script>
+        function formatearTexto(texto, palabrasPorLinea) {
+            const palabras = texto.split(/\s+/);
+            const lineas = [];
+
+            for (let i = 0; i < palabras.length; i += palabrasPorLinea) {
+                const linea = palabras.slice(i, i + palabrasPorLinea).join(' ');
+                lineas.push(linea);
+            }
+
+            return lineas.join('\n');
+        }
+
+        function formatearYCopiar() {
+            const textoOriginal = document.getElementById('textoOriginal').value;
+            const palabrasPorLinea = parseInt(document.getElementById('palabrasPorLinea').value, 10);
+            const textoFormateado = formatearTexto(textoOriginal, palabrasPorLinea);
+
+            document.getElementById('textoFormateado').value = textoFormateado;
+
+            // Copiar al portapapeles
+            const textarea = document.getElementById('textoFormateado');
+            textarea.select();
+            document.execCommand('copy');
+
+            alert('Texto formateado y copiado al portapapeles.');
+        }
+    </script>
+</body>
+</html>
